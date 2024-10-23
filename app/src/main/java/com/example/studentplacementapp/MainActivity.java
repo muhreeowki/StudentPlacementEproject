@@ -17,23 +17,22 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout textInputLayoutPassword;
     private Button buttonLogin;
     private Button buttonRegister;
+    public DatabaseHelper databaseHelper;
 
     // Database Helper
-    private DatabaseHelper databaseHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         // Initialize Database Helper
         databaseHelper = new DatabaseHelper(this);
 
         // Initialize Views
-        initViews();
+        //  initViews();
 
         // Set Click Listeners
-        setClickListeners();
+        // setClickListeners();
     }
 
     /**

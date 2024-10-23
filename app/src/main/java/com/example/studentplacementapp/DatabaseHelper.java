@@ -22,17 +22,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER = "user";
 
     // User Table Columns names
-    private static final String COLUMN_USER_ID = "user_id";
-    private static final String COLUMN_USER_NAME = "user_name";
-    private static final String COLUMN_USER_EMAIL = "user_email";
-    private static final String COLUMN_USER_PASSWORD = "user_password";
+    private static final String COLUMN_USER_ID = "id";
+    private static final String COLUMN_USER_NAME = "name";
+    private static final String COLUMN_USER_EMAIL = "email";
+    private static final String COLUMN_USER_PASSWORD = "password";
+    private static final String COLUMN_USER_ROLE = "role";
+    private static final String COLUMN_USER_BRANCH = "studentBranch";
+    private static final String COLUMN_USER_PERCENTAGE = "role";
 
     // Create table SQL query
-    private static final String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
+    private static final String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_USER_NAME + " TEXT,"
-            + COLUMN_USER_EMAIL + " TEXT,"
-            + COLUMN_USER_PASSWORD + " TEXT"
+            + COLUMN_USER_NAME + " TEXT NOT NULL,"
+            + COLUMN_USER_EMAIL + " TEXT NOT NULL,"
+            + COLUMN_USER_PASSWORD + " TEXT NOT NULL,"
+            + COLUMN_USER_ROLE + " TEXT CHECK( " + COLUMN_USER_ROLE + " IN ('admin','student','TPO') )   NOT NULL DEFAULT 'admin',"
+            + COLUMN_USER_BRANCH + " TEXT,"
+            + COLUMN_USER_PERCENTAGE + " TEXT"
             + ")";
 
     // Drop table SQL query

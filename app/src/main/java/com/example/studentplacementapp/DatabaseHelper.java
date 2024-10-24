@@ -76,6 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        if (user.getName() == null) {
+            throw new RuntimeException("Name is required for registering.");
+        }
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_NAME, user.getName());
         values.put(COLUMN_USER_EMAIL, user.getEmail());

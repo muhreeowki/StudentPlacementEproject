@@ -16,7 +16,7 @@ import com.example.studentplacementapp.data.LoginRepository;
  */
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
 
-    private Context context;
+    private final Context context;
     public LoginViewModelFactory(Context context) {
         this.context = context;
     }

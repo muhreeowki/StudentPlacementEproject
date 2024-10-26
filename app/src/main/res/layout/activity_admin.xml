@@ -7,12 +7,13 @@
     android:gravity="center">
 
     <TextView
+        android:id="@+id/tvAdminWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:text="Admin Dashboard"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnAddTpo"

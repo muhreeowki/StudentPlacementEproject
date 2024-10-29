@@ -43,8 +43,8 @@
 
         <Button
             android:id="@+id/registerChoice"
-            android:layout_width="213dp"
-            android:layout_height="70dp"
+            android:layout_width="145dp"
+            android:layout_height="65dp"
             android:text="Create New Account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,8 +54,8 @@
 
         <Button
             android:id="@+id/loginChoice"
-            android:layout_width="147dp"
-            android:layout_height="67dp"
+            android:layout_width="145dp"
+            android:layout_height="65dp"
             android:text="Login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -39,14 +39,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_PASSWORD + " TEXT NOT NULL" + ")";
 
     private static final String CREATE_TABLE_TPO = "CREATE TABLE " + TABLE_TPO + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY UNIQUE,"
-            + COLUMN_ADMIN_ID + " TEXT,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NAME + " TEXT NOT NULL,"
             + COLUMN_PASSWORD + " TEXT NOT NULL" + ")";
 
     private static final String CREATE_TABLE_STUDENT = "CREATE TABLE " + TABLE_STUDENT + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY UNIQUE,"
-            + COLUMN_ADMIN_ID + " TEXT,"
             + COLUMN_NAME + " TEXT NOT NULL,"
             + COLUMN_PASSWORD + " TEXT NOT NULL,"
             + COLUMN_BRANCH + " TEXT,"
@@ -184,5 +182,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return isValid;
     }
-
 }

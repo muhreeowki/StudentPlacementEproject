@@ -25,8 +25,7 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student);
 
         // Get student details from login intent
-        studentId = getIntent().getStringExtra("student_id");
-        studentName = getIntent().getStringExtra("student_name");
+        studentName = getIntent().getStringExtra("STUDENT_NAME");
 
         dbHelper = new DatabaseHelper(this);
         initializeViews();
@@ -40,7 +39,7 @@ public class StudentActivity extends AppCompatActivity {
         btnViewPapers = findViewById(R.id.btnViewPapers);
         btnViewSelected = findViewById(R.id.btnViewSelected);
 
-        tvWelcome.setText("Welcome, " + studentName);
+        tvWelcome.setText("Welcome " + studentName);
     }
 
     private void setupClickListeners() {

@@ -31,7 +31,6 @@ public class TPOAddCompanyActivity extends AppCompatActivity {
         etCompanyName = findViewById(R.id.etCompanyName);
         etJobDescription = findViewById(R.id.etJobDescription);
         etEligibilityCriteria = findViewById(R.id.etEligibilityCriteria);
-        etPackage = findViewById(R.id.etPackage);
         btnSubmit = findViewById(R.id.btnSubmit);
     }
 
@@ -50,10 +49,9 @@ public class TPOAddCompanyActivity extends AppCompatActivity {
 
     private void saveCompanyDetails() {
         ContentValues values = new ContentValues();
-        values.put("company_name", etCompanyName.getText().toString());
-        values.put("job_description", etJobDescription.getText().toString());
-        values.put("eligibility", etEligibilityCriteria.getText().toString());
-        values.put("package", etPackage.getText().toString());
+        values.put("name", etCompanyName.getText().toString());
+        values.put("description", etJobDescription.getText().toString());
+        values.put("requirements", etEligibilityCriteria.getText().toString());
 
         long result = dbHelper.getWritableDatabase().insert("companies", null, values);
         if (result != -1) {

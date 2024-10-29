@@ -1,6 +1,7 @@
 package com.example.studentplacement.activities;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.example.studentplacement.DatabaseHelper;
 import com.example.studentplacement.R;
 
 public class AdminAddTPOActivity extends AppCompatActivity {
-    private EditText etTpoId, etTpoName, etTpoPassword;
+    private EditText etTpoName, etTpoPassword;
     private Button btnSave;
     private DatabaseHelper dbHelper;
 
@@ -29,7 +30,6 @@ public class AdminAddTPOActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        etTpoId = findViewById(R.id.etTpoId);
         etTpoName = findViewById(R.id.etTpoName);
         etTpoPassword = findViewById(R.id.etTpoPassword);
         btnSave = findViewById(R.id.btnSave);
@@ -49,14 +49,12 @@ public class AdminAddTPOActivity extends AppCompatActivity {
     }
 
     private void saveTpo() {
-        String tpoId = etTpoId.getText().toString().trim();
         String tpoName = etTpoName.getText().toString().trim();
         String tpoPassword = etTpoPassword.getText().toString().trim();
 
-        if (validateInput(tpoId, tpoName, tpoPassword)) {
+        if (validateInput(tpoName, tpoPassword)) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.COLUMN_ID, tpoId);
             values.put(DatabaseHelper.COLUMN_NAME, tpoName);
             values.put(DatabaseHelper.COLUMN_PASSWORD, tpoPassword);
 
@@ -70,11 +68,7 @@ public class AdminAddTPOActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateInput(String tpoId, String tpoName, String tpoPassword) {
-        if (tpoId.isEmpty()) {
-            etTpoId.setError("TPO ID is required");
-            return false;
-        }
+    private boolean validateInput(String tpoName, String tpoPassword) {
         if (tpoName.isEmpty()) {
             etTpoName.setError("TPO Name is required");
             return false;

@@ -60,9 +60,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else if (selectedId == R.id.rbTPO) {
             // Verify TPO credentials from database
-            if (verifyTPOLogin(name, password)) {
+            if (dbHelper.validateLogin(name, password, "tpo")) {
                 Intent intent = new Intent(LoginActivity.this, TPOActivity.class);
-                intent.putExtra("TPO_ID", name);
+                intent.putExtra("TPO_NAME", name);
                 startActivity(intent);
                 finish();
             } else {
@@ -70,24 +70,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else {
             // Verify Student credentials from database
-            if (verifyStudentLogin(name, password)) {
+            if (dbHelper.validateLogin(name, password, "student")) {
                 Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
-                intent.putExtra("STUDENT_ID", name);
+                intent.putExtra("STUDENT_NAME", name);
                 startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "Invalid student credentials", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private boolean verifyTPOLogin(String userId, String password) {
-        // Add database verification logic here
-        return true; // Temporary return for demo
-    }
-
-    private boolean verifyStudentLogin(String userId, String password) {
-        // Add database verification logic here
-        return true; // Temporary return for demo
     }
 }

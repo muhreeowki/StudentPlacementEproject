@@ -36,7 +36,7 @@ public class AdminActivity extends AppCompatActivity {
         btnAddStudent = findViewById(R.id.btnAddStudent);
         btnLogout = findViewById(R.id.btnLogout);
 
-        tvAdminWelcome.setText(String.format("Welcome %s !", adminName));
+        tvAdminWelcome.setText(String.format("Welcome %s", adminName));
     }
 
     private void setupClickListeners() {

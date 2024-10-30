@@ -38,7 +38,7 @@ public class StudentViewCompaniesActivity extends AppCompatActivity {
 
     private void loadCompanies() {
         companies = new ArrayList<Company>();
-        Cursor cursor = dbHelper.getReadableDatabase().query("companies", null, null, null, null, null, "company_name ASC");
+        Cursor cursor = dbHelper.getReadableDatabase().query(DatabaseHelper.TABLE_COMPANY, null, null, null, null, null, "name ASC");
 
         while (cursor.moveToNext()) {
             try {

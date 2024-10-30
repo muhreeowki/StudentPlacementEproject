@@ -46,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.tvNotificationTitle.setText(notification.getTitle());
         holder.tvCompanyName.setText(notification.getCompany());
         holder.tvNotificationMessage.setText(notification.getMessage());
-        holder.tvNotificationDate.setText(notification.getDate());
+        // holder.tvNotificationDate.setText(notification.getDate());
 
         // Change background color based on read status
         if (!notification.isRead()) {

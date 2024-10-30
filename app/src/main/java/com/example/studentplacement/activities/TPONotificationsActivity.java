@@ -43,8 +43,8 @@ public class TPONotificationsActivity extends AppCompatActivity {
 
     private void loadCompanies() {
         // Load companies from database into spinner
-        Cursor cursor = dbHelper.getReadableDatabase().query("companies",
-                new String[]{"company_name"}, null, null, null, null, null);
+        Cursor cursor = dbHelper.getReadableDatabase().query("company",
+                new String[]{"name"}, null, null, null, null, null);
 
         ArrayList<String> companies = new ArrayList<>();
         while(cursor.moveToNext()) {
@@ -77,7 +77,7 @@ public class TPONotificationsActivity extends AppCompatActivity {
         values.put("message", etNotificationMessage.getText().toString());
         values.put("company", spinnerCompany.getSelectedItem().toString());
 
-        long result = dbHelper.getWritableDatabase().insert("notifications", null, values);
+        long result = dbHelper.getWritableDatabase().insert(DatabaseHelper.TABLE_NOTIFICATION, null, values);
         if (result != -1) {
             Toast.makeText(this, "Notification sent successfully", Toast.LENGTH_SHORT).show();
             finish();

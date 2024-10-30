@@ -8,12 +8,11 @@ public class Notification {
     private String date;
     private boolean isRead;
 
-    public Notification(int id, String title, String message, String company, String date) {
+    public Notification(int id, String title, String message, String company) {
         this.id = id;
         this.title = title;
         this.message = message;
         this.company = company;
-        this.date = date;
         this.isRead = false;
     }
 
@@ -48,14 +47,6 @@ public class Notification {
 
     public void setCompany(String company) {
         this.company = company;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public boolean isRead() {

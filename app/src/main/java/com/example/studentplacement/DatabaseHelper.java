@@ -56,9 +56,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_REQUIREMENTS + " TEXT" + ")";
 
-    private static final String INSERT_ADMIN_1 = "INSERT INTO " + TABLE_ADMIN
-            + "(" + COLUMN_NAME + ", " + COLUMN_PASSWORD + ")"
-            + "VALUES('adminMo', 'admin123')";
+    private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + TABLE_NOTIFICATION + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "title TEXT,"
+            + "message TEXT,"
+            + "company TEXT" + ")";
 
 
     public DatabaseHelper(Context context) {
@@ -68,9 +70,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_ADMIN);
-        db.execSQL(INSERT_ADMIN_1);
         db.execSQL(CREATE_TABLE_TPO);
         db.execSQL(CREATE_TABLE_STUDENT);
+        db.execSQL(CREATE_TABLE_NOTIFICATION);
         db.execSQL(CREATE_TABLE_COMPANY);
     }
 
@@ -79,6 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMIN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TPO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMPANY);
         onCreate(db);
     }

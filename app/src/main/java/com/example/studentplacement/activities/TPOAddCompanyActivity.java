@@ -53,7 +53,7 @@ public class TPOAddCompanyActivity extends AppCompatActivity {
         values.put("description", etJobDescription.getText().toString());
         values.put("requirements", etEligibilityCriteria.getText().toString());
 
-        long result = dbHelper.getWritableDatabase().insert("companies", null, values);
+        long result = dbHelper.getWritableDatabase().insert(DatabaseHelper.TABLE_COMPANY, null, values);
         if (result != -1) {
             Toast.makeText(this, "Company details added successfully", Toast.LENGTH_SHORT).show();
             finish();

@@ -40,7 +40,7 @@ public class StudentViewNotificationsActivity extends AppCompatActivity {
 
     private void loadNotifications() {
         notifications = new ArrayList<>();
-        Cursor cursor = dbHelper.getReadableDatabase().query("notifications",
+        Cursor cursor = dbHelper.getReadableDatabase().query(DatabaseHelper.TABLE_NOTIFICATION,
                 null, null, null, null, null, "id DESC");
 
         while(cursor.moveToNext()) {
@@ -49,8 +49,7 @@ public class StudentViewNotificationsActivity extends AppCompatActivity {
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("title")),
                         cursor.getString(cursor.getColumnIndexOrThrow("message")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("company")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("date"))
+                        cursor.getString(cursor.getColumnIndexOrThrow("company"))
                 );
                 notifications.add(notification);
             } catch (Exception e) {

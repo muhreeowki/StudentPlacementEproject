@@ -34,8 +34,8 @@ public class TPOActivity extends AppCompatActivity {
     private void setupClickListeners() {
         btnAddCompany.setOnClickListener(v -> startActivity(new Intent(TPOActivity.this, TPOAddCompanyActivity.class)));
         btnNotifications.setOnClickListener(v -> startActivity(new Intent(TPOActivity.this, TPONotificationsActivity.class)));
-        // TODO: btnPreviousPapers.setOnClickListener(v -> startActivity(new Intent(TPOActivity.this, PreviousPapersActivity.class)));
-        // TODO: btnSelectedStudents.setOnClickListener(v -> startActivity(new Intent(TPOActivity.this, SelectedStudentsActivity.class)));
+        btnPreviousPapers.setOnClickListener(v -> startActivity(new Intent(TPOActivity.this, TPOAddPastPaperActivity.class)));
+        btnSelectedStudents.setOnClickListener(v -> startActivity(new Intent(TPOActivity.this, TPOAddSelectedStudentActivity.class)));
     }
 }
 

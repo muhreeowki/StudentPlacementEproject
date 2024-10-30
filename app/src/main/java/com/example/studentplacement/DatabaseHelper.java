@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.studentplacement.models.PastPaper;
+import com.example.studentplacement.models.SelectedStudent;
+
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "PlacementSystem.db";
     private static final int DATABASE_VERSION = 1;
@@ -16,7 +21,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_STUDENT = "student";
     public static final String TABLE_COMPANY = "company";
     public static final String TABLE_NOTIFICATION = "notification";
-    public static final String TABLE_SELECTED_STUDENT = "selected_student";
+    public static final String TABLE_PAST_PAPERS = "past_papers";
+    public static final String TABLE_SELECTED_STUDENTS = "selected_students";
 
     // Common column names
     public static final String COLUMN_ID = "id";
@@ -31,6 +37,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Company Table columns
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_REQUIREMENTS = "requirements";
+
+    // Past Papers table columns
+    private static final String COLUMN_PAPER_ID = "paper_id";
+    private static final String COLUMN_COMPANY_NAME = "company_name";
+    private static final String COLUMN_PAPER_YEAR = "year";
+    private static final String COLUMN_PAPER_URL = "paper_url";
+    private static final String COLUMN_PAPER_TYPE = "paper_type";
+
+    // Selected Students table columns
+    private static final String COLUMN_SELECTION_ID = "selection_id";
+    private static final String COLUMN_STUDENT_ID = "student_id";
+    private static final String COLUMN_STUDENT_NAME = "student_name";
+    private static final String COLUMN_PACKAGE = "package_offered";
+    private static final String COLUMN_SELECTION_DATE = "selection_date";
+
 
     // Create table statements
     private static final String CREATE_TABLE_ADMIN = "CREATE TABLE " + TABLE_ADMIN + "("
@@ -62,6 +83,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "message TEXT,"
             + "company TEXT" + ")";
 
+    private static final String CREATE_PAST_PAPERS_TABLE = "CREATE TABLE " + TABLE_PAST_PAPERS + "("
+            + COLUMN_PAPER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_COMPANY_NAME + " TEXT,"
+            + COLUMN_PAPER_YEAR + " INTEGER,"
+            + COLUMN_PAPER_URL + " TEXT,"
+            + COLUMN_PAPER_TYPE + " TEXT"
+            + ")";
+
+    private static final String CREATE_SELECTED_STUDENTS_TABLE = "CREATE TABLE " + TABLE_SELECTED_STUDENTS + "("
+            + COLUMN_SELECTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_STUDENT_ID + " TEXT,"
+            + COLUMN_STUDENT_NAME + " TEXT,"
+            + COLUMN_COMPANY_NAME + " TEXT,"
+            + COLUMN_PACKAGE + " REAL,"
+            + COLUMN_SELECTION_DATE + " TEXT"
+            + ")";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -74,6 +112,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STUDENT);
         db.execSQL(CREATE_TABLE_NOTIFICATION);
         db.execSQL(CREATE_TABLE_COMPANY);
+        db.execSQL(CREATE_PAST_PAPERS_TABLE);
+        db.execSQL(CREATE_SELECTED_STUDENTS_TABLE);
     }
 
     @Override
@@ -83,6 +123,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMPANY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAST_PAPERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SELECTED_STUDENTS);
         onCreate(db);
     }
 
@@ -193,5 +235,75 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return isValid;
+    }
+
+    // Methods to add past papers
+    public long addPastPaper(String companyName, int year, String paperUrl, String paperType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COMPANY_NAME, companyName);
+        values.put(COLUMN_PAPER_YEAR, year);
+        values.put(COLUMN_PAPER_URL, paperUrl);
+        values.put(COLUMN_PAPER_TYPE, paperType);
+        return db.insert(TABLE_PAST_PAPERS, null, values);
+    }
+
+    // Method to add selected student
+    public long addSelectedStudent(String studentId, String studentName, String companyName,
+                                   double packageOffered, String selectionDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STUDENT_ID, studentId);
+        values.put(COLUMN_STUDENT_NAME, studentName);
+        values.put(COLUMN_COMPANY_NAME, companyName);
+        values.put(COLUMN_PACKAGE, packageOffered);
+        values.put(COLUMN_SELECTION_DATE, selectionDate);
+        return db.insert(TABLE_SELECTED_STUDENTS, null, values);
+    }
+
+    // Method to get all past papers
+    public ArrayList<PastPaper> getAllPastPapers() {
+        ArrayList<PastPaper> papersList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PAST_PAPERS + " ORDER BY " + COLUMN_PAPER_YEAR + " DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                PastPaper paper = new PastPaper();
+                paper.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PAPER_ID)));
+                paper.setCompanyName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COMPANY_NAME)));
+                paper.setYear(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_PAPER_YEAR)));
+                paper.setPaperUrl(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAPER_URL)));
+                paper.setPaperType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAPER_TYPE)));
+                papersList.add(paper);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return papersList;
+    }
+
+    // Method to get all selected students
+    public ArrayList<SelectedStudent> getAllSelectedStudents() {
+        ArrayList<SelectedStudent> selectedStudents = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SELECTED_STUDENTS +
+                " ORDER BY " + COLUMN_SELECTION_DATE + " DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                SelectedStudent student = new SelectedStudent();
+                student.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SELECTION_ID)));
+                student.setStudentId(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_ID)));
+                student.setStudentName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_NAME)));
+                student.setCompanyName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COMPANY_NAME)));
+                student.setPackageOffered(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_PACKAGE)));
+                student.setSelectionDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SELECTION_DATE)));
+                selectedStudents.add(student);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return selectedStudents;
     }
 }

@@ -12,8 +12,6 @@ import com.example.studentplacement.R;
 
 public class TPOActivity extends AppCompatActivity {
     private Button btnAddCompany, btnNotifications, btnPreviousPapers, btnSelectedStudents;
-    private SharedPreferences sharedPreferences;
-    private TextView tvWelcomeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +23,12 @@ public class TPOActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("TPO_NAME");
 
         btnAddCompany = findViewById(R.id.btnAddCompany);
         btnNotifications = findViewById(R.id.btnNotifications);
         btnPreviousPapers = findViewById(R.id.btnPreviousPapers);
         btnSelectedStudents = findViewById(R.id.btnSelectedStudents);
-        tvWelcomeText = findViewById(R.id.tvWelcomeTPO);
 
-        tvWelcomeText.setText("Welcome " + name);
     }
 
     private void setupClickListeners() {

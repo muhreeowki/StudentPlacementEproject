@@ -34,17 +34,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Create table statements
     private static final String CREATE_TABLE_ADMIN = "CREATE TABLE " + TABLE_ADMIN + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NAME + " TEXT NOT NULL UNIQUE,"
             + COLUMN_PASSWORD + " TEXT NOT NULL" + ")";
 
     private static final String CREATE_TABLE_TPO = "CREATE TABLE " + TABLE_TPO + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY NOT NULL,"
             + COLUMN_NAME + " TEXT NOT NULL,"
             + COLUMN_PASSWORD + " TEXT NOT NULL" + ")";
 
     private static final String CREATE_TABLE_STUDENT = "CREATE TABLE " + TABLE_STUDENT + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY UNIQUE,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY UNIQUE NOT NULL,"
             + COLUMN_NAME + " TEXT NOT NULL,"
             + COLUMN_PASSWORD + " TEXT NOT NULL,"
             + COLUMN_BRANCH + " TEXT,"
@@ -172,13 +172,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to validate login credentials
-    public boolean validateLogin(String name, String password, String tableName) {
+    public boolean validateLogin(String nameOrId, String password, String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(tableName,
-                new String[]{COLUMN_NAME},
-                COLUMN_NAME + "=? AND " + COLUMN_PASSWORD + "=?",
-                new String[]{name, password},
+        Cursor cursor;
+        if (tableName == DatabaseHelper.TABLE_ADMIN) {
+            cursor = db.query(tableName,
+                    new String[]{COLUMN_NAME},
+                    COLUMN_NAME + "=? AND " + COLUMN_PASSWORD + "=?",
+                    new String[]{nameOrId, password},
+                    null, null, null);
+        } else {
+         cursor = db.query(tableName,
+                new String[]{COLUMN_ID},
+                COLUMN_ID + "=? AND " + COLUMN_PASSWORD + "=?",
+                new String[]{nameOrId, password},
                 null, null, null);
+        }
 
         boolean isValid = cursor.getCount() > 0;
         cursor.close();

@@ -15,7 +15,6 @@ import com.example.studentplacement.R;
 // StudentActivity.java - Main dashboard for students
 public class StudentActivity extends AppCompatActivity {
     private Button btnViewCompanies, btnViewNotifications, btnViewPapers, btnViewSelected;
-    private TextView tvWelcome;
     private String studentId, studentName;
     private DatabaseHelper dbHelper;
 
@@ -24,22 +23,17 @@ public class StudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
-        // Get student details from login intent
-        studentName = getIntent().getStringExtra("STUDENT_NAME");
-
         dbHelper = new DatabaseHelper(this);
         initializeViews();
         setupClickListeners();
     }
 
     private void initializeViews() {
-        tvWelcome = findViewById(R.id.tvWelcome);
         btnViewCompanies = findViewById(R.id.btnViewCompanies);
         btnViewNotifications = findViewById(R.id.btnViewNotifications);
         btnViewPapers = findViewById(R.id.btnViewPapers);
         btnViewSelected = findViewById(R.id.btnViewSelected);
 
-        tvWelcome.setText("Welcome " + studentName);
     }
 
     private void setupClickListeners() {

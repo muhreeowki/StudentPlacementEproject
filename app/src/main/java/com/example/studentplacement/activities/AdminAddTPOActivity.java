@@ -15,7 +15,7 @@ import com.example.studentplacement.DatabaseHelper;
 import com.example.studentplacement.R;
 
 public class AdminAddTPOActivity extends AppCompatActivity {
-    private EditText etTpoName, etTpoPassword;
+    private EditText etTpoName, etTpoPassword, etTpoId;
     private Button btnSave;
     private DatabaseHelper dbHelper;
 
@@ -30,6 +30,7 @@ public class AdminAddTPOActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        etTpoId = findViewById(R.id.etTpoId);
         etTpoName = findViewById(R.id.etTpoName);
         etTpoPassword = findViewById(R.id.etTpoPassword);
         btnSave = findViewById(R.id.btnSave);
@@ -49,12 +50,14 @@ public class AdminAddTPOActivity extends AppCompatActivity {
     }
 
     private void saveTpo() {
+        String tpoId = etTpoId.getText().toString().trim();
         String tpoName = etTpoName.getText().toString().trim();
         String tpoPassword = etTpoPassword.getText().toString().trim();
 
         if (validateInput(tpoName, tpoPassword)) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.COLUMN_ID, tpoId);
             values.put(DatabaseHelper.COLUMN_NAME, tpoName);
             values.put(DatabaseHelper.COLUMN_PASSWORD, tpoPassword);
 

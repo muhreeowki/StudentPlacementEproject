@@ -12,7 +12,7 @@ import com.example.studentplacement.DatabaseHelper;
 import com.example.studentplacement.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText etName, etPassword;
+    private EditText etUserNameOrId, etPassword;
     private RadioGroup rgUserType;
     private Button btnLogin;
     private DatabaseHelper dbHelper;
@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        etName = findViewById(R.id.etLoginId);
+        etUserNameOrId = findViewById(R.id.etLoginId);
         etPassword = findViewById(R.id.etLoginPassword);
         rgUserType = findViewById(R.id.rgUserType);
         btnLogin = findViewById(R.id.btnLogin);
@@ -38,10 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performLogin() {
-        String name = etName.getText().toString();
+        String id = etUserNameOrId.getText().toString();
         String password = etPassword.getText().toString();
 
-        if (name.isEmpty() || password.isEmpty()) {
+        if (id.isEmpty() || password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -49,10 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         int selectedId = rgUserType.getCheckedRadioButtonId();
         if (selectedId == R.id.rbAdmin) {
             // Hardcoded admin credentials for demo
-            if (dbHelper.validateLogin(name, password, "admin")) {
+            if (dbHelper.validateLogin(id, password, DatabaseHelper.TABLE_ADMIN)) {
                 Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                intent.putExtra("ADMIN_NAME", name);
+                intent.putExtra("ADMIN_NAME", id);
                 startActivity(intent);
                 finish();
             } else {
@@ -60,9 +60,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else if (selectedId == R.id.rbTPO) {
             // Verify TPO credentials from database
-            if (dbHelper.validateLogin(name, password, "tpo")) {
+            if (dbHelper.validateLogin(id, password, DatabaseHelper.TABLE_TPO)) {
                 Intent intent = new Intent(LoginActivity.this, TPOActivity.class);
-                intent.putExtra("TPO_NAME", name);
+                intent.putExtra("TPO_NAME", id);
                 startActivity(intent);
                 finish();
             } else {
@@ -70,9 +70,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else {
             // Verify Student credentials from database
-            if (dbHelper.validateLogin(name, password, "student")) {
+            if (dbHelper.validateLogin(id, password, DatabaseHelper.TABLE_STUDENT)) {
                 Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
-                intent.putExtra("STUDENT_NAME", name);
+                intent.putExtra("STUDENT_NAME", id);
                 startActivity(intent);
                 finish();
             } else {

@@ -39,7 +39,7 @@ public class StudentActivity extends AppCompatActivity {
     private void setupClickListeners() {
         btnViewCompanies.setOnClickListener(v -> startActivity(new Intent(StudentActivity.this, StudentViewCompaniesActivity.class)));
         btnViewNotifications.setOnClickListener(v -> startActivity(new Intent(StudentActivity.this, StudentViewNotificationsActivity.class)));
-        // TODO: btnViewPapers.setOnClickListener(v -> startActivity(new Intent(StudentActivity.this, ViewPapersActivity.class)));
-        // TODO: btnViewSelected.setOnClickListener(v -> startActivity(new Intent(StudentActivity.this, ViewSelectedActivity.class)));
+        btnViewPapers.setOnClickListener(v -> startActivity(new Intent(StudentActivity.this, ViewPastPapersActivity.class)));
+        btnViewSelected.setOnClickListener(v -> startActivity(new Intent(StudentActivity.this, ViewSelectedStudentsActivity.class)));
     }
 }

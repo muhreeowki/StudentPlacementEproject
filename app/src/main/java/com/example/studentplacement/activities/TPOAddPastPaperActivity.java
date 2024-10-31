@@ -66,7 +66,7 @@ public class TPOAddPastPaperActivity extends AppCompatActivity {
 
     private void selectFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType("application/*");
         selectFileActivityResultLauncher.launch(intent);
     }
 
@@ -93,7 +93,7 @@ public class TPOAddPastPaperActivity extends AppCompatActivity {
     private String saveFileToInternalStorage(Uri sourceUri) {
         try {
             InputStream inputStream = getContentResolver().openInputStream(sourceUri);
-            String fileName = "paper_" + System.currentTimeMillis() + getFileExtension(sourceUri);
+            String fileName = "paper_" + System.currentTimeMillis() + "." + getFileExtension(sourceUri);
             File file = new File(getFilesDir(), fileName);
             FileOutputStream outputStream = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
@@ -103,7 +103,9 @@ public class TPOAddPastPaperActivity extends AppCompatActivity {
             }
             outputStream.close();
             inputStream.close();
-            return file.getAbsolutePath();
+            String path = file.getAbsolutePath();
+            System.out.println("Past Paper File Path: " + path);
+            return path;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

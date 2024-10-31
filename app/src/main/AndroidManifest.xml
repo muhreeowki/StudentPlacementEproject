@@ -13,18 +13,6 @@
         android:theme="@style/Theme.StudentPlacement"
         tools:targetApi="31">
         <activity
-            android:name=".activities.ViewSelectedStudentsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ViewPastPaperActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.TPOAddSelectedStudentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.TPOAddPastPaperActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -52,6 +40,12 @@
             android:name=".activities.TPOAddCompanyActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.TPOAddSelectedStudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TPOAddPastPaperActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.StudentActivity"
             android:exported="false" />
         <activity
@@ -61,6 +55,12 @@
             android:name=".activities.StudentViewCompaniesActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.ViewSelectedStudentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ViewPastPapersActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.StudentPlacement" />
@@ -68,6 +68,17 @@
             android:name=".activities.RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.StudentPlacement" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.studentplacement.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

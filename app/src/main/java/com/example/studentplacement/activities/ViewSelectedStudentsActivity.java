@@ -5,11 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +29,7 @@ public class ViewSelectedStudentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_selected_students);
+        setContentView(R.layout.activity_student_view_selected_students);
 
         dbHelper = new DatabaseHelper(this);
         recyclerView = findViewById(R.id.recyclerView);

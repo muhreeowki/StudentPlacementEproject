@@ -1,7 +1,6 @@
 package com.example.studentplacement.activities;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +29,7 @@ public class AdminAddTPOActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        etTpoId = findViewById(R.id.etTpoId);
+        etTpoId = findViewById(R.id.etTpoUsername);
         etTpoName = findViewById(R.id.etTpoName);
         etTpoPassword = findViewById(R.id.etTpoPassword);
         btnSave = findViewById(R.id.btnSave);
@@ -50,14 +49,14 @@ public class AdminAddTPOActivity extends AppCompatActivity {
     }
 
     private void saveTpo() {
-        String tpoId = etTpoId.getText().toString().trim();
+        String tpoUsername = etTpoId.getText().toString().trim();
         String tpoName = etTpoName.getText().toString().trim();
         String tpoPassword = etTpoPassword.getText().toString().trim();
 
         if (validateInput(tpoName, tpoPassword)) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.COLUMN_ID, tpoId);
+            values.put(DatabaseHelper.COLUMN_USERNAME, tpoUsername);
             values.put(DatabaseHelper.COLUMN_NAME, tpoName);
             values.put(DatabaseHelper.COLUMN_PASSWORD, tpoPassword);
 

@@ -15,7 +15,7 @@ import com.example.studentplacement.R;
 
 // AddStudentActivity.java
 public class AdminAddStudentActivity extends AppCompatActivity {
-    private EditText etStudentName, etStudentPassword, etBranch, etPercentage, etStudentId;
+    private EditText etStudentName, etStudentPassword, etBranch, etPercentage, etStudentUsername;
     private Button btnSave;
     private DatabaseHelper dbHelper;
 
@@ -30,7 +30,7 @@ public class AdminAddStudentActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        etStudentId = findViewById(R.id.etStudentId);
+        etStudentUsername = findViewById(R.id.etStudentUsername);
         etStudentName = findViewById(R.id.etStudentName);
         etStudentPassword = findViewById(R.id.etStudentPassword);
         etBranch = findViewById(R.id.etBranch);
@@ -53,17 +53,17 @@ public class AdminAddStudentActivity extends AppCompatActivity {
 
     private void saveStudent() {
         String studentName = etStudentName.getText().toString().trim();
-        String studentId = etStudentId.getText().toString().trim();
+        String studentUsername = etStudentUsername.getText().toString().trim();
         String studentPassword = etStudentPassword.getText().toString().trim();
         String branch = etBranch.getText().toString().trim();
         String percentageStr = etPercentage.getText().toString().trim();
 
-        if (validateInput(studentName, studentPassword, branch, percentageStr)) {
+        if (validateInput(studentName, studentUsername, studentPassword, branch, percentageStr)) {
             double percentage = Double.parseDouble(percentageStr);
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.COLUMN_ID, studentId);
+            values.put(DatabaseHelper.COLUMN_USERNAME, studentUsername);
             values.put(DatabaseHelper.COLUMN_NAME, studentName);
             values.put(DatabaseHelper.COLUMN_PASSWORD, studentPassword);
             values.put(DatabaseHelper.COLUMN_BRANCH, branch);
@@ -79,10 +79,14 @@ public class AdminAddStudentActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateInput(String studentName, String studentPassword,
+    private boolean validateInput(String studentName, String studentUsername, String studentPassword,
                                   String branch, String percentageStr) {
         if (studentName.isEmpty()) {
             etStudentName.setError("Student Name is required");
+            return false;
+        }
+        if (studentUsername.isEmpty()) {
+            etStudentUsername.setError("Student Username is required");
             return false;
         }
         if (studentPassword.isEmpty()) {

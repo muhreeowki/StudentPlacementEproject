@@ -12,9 +12,6 @@ import com.example.studentplacement.models.SelectedStudent;
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "PlacementSystem.db";
-    private static final int DATABASE_VERSION = 1;
-
     // Table Names
     public static final String TABLE_ADMIN = "admin";
     public static final String TABLE_TPO = "tpo";
@@ -23,21 +20,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NOTIFICATION = "notification";
     public static final String TABLE_PAST_PAPERS = "past_papers";
     public static final String TABLE_SELECTED_STUDENTS = "selected_students";
-
     // Common column names
     public static final String COLUMN_ID = "id";
+    public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_PASSWORD = "password";
-    public static final String COLUMN_ADMIN_ID = "adminID";
-
     // Student Table columns
     public static final String COLUMN_BRANCH = "branch";
     public static final String COLUMN_PERCENTAGE = "percentage";
-
     // Company Table columns
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_REQUIREMENTS = "requirements";
-
+    private static final String DATABASE_NAME = "PlacementSystem.db";
+    private static final int DATABASE_VERSION = 1;
     // Past Papers table columns
     private static final String COLUMN_PAPER_ID = "paper_id";
     private static final String COLUMN_COMPANY_NAME = "company_name";
@@ -56,17 +51,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Create table statements
     private static final String CREATE_TABLE_ADMIN = "CREATE TABLE " + TABLE_ADMIN + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_NAME + " TEXT NOT NULL UNIQUE,"
+            + COLUMN_USERNAME + " TEXT NOT NULL UNIQUE,"
             + COLUMN_PASSWORD + " TEXT NOT NULL" + ")";
 
     private static final String CREATE_TABLE_TPO = "CREATE TABLE " + TABLE_TPO + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY NOT NULL,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NAME + " TEXT NOT NULL,"
+            + COLUMN_USERNAME + " TEXT NOT NULL UNIQUE,"
             + COLUMN_PASSWORD + " TEXT NOT NULL" + ")";
 
     private static final String CREATE_TABLE_STUDENT = "CREATE TABLE " + TABLE_STUDENT + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY UNIQUE NOT NULL,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NAME + " TEXT NOT NULL,"
+            + COLUMN_USERNAME + " TEXT NOT NULL UNIQUE,"
             + COLUMN_PASSWORD + " TEXT NOT NULL,"
             + COLUMN_BRANCH + " TEXT,"
             + COLUMN_PERCENTAGE + " REAL" + ")";
@@ -129,11 +126,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to create an admin account
-    public boolean createAdminAccount(String name, String password) {
+    public boolean createAdminAccount(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_USERNAME, username);
         values.put(COLUMN_PASSWORD, password);
 
         // Insert row
@@ -214,22 +211,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to validate login credentials
-    public boolean validateLogin(String nameOrId, String password, String tableName) {
+    public boolean validateLogin(String username, String password, String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor;
-        if (tableName == DatabaseHelper.TABLE_ADMIN) {
-            cursor = db.query(tableName,
-                    new String[]{COLUMN_NAME},
-                    COLUMN_NAME + "=? AND " + COLUMN_PASSWORD + "=?",
-                    new String[]{nameOrId, password},
-                    null, null, null);
-        } else {
-         cursor = db.query(tableName,
-                new String[]{COLUMN_ID},
-                COLUMN_ID + "=? AND " + COLUMN_PASSWORD + "=?",
-                new String[]{nameOrId, password},
+        cursor = db.query(tableName,
+                new String[]{COLUMN_USERNAME},
+                COLUMN_USERNAME + "=? AND " + COLUMN_PASSWORD + "=?",
+                new String[]{username, password},
                 null, null, null);
-        }
 
         boolean isValid = cursor.getCount() > 0;
         cursor.close();

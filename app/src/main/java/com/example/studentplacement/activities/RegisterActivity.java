@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,7 @@ import com.example.studentplacement.DatabaseHelper;
 import com.example.studentplacement.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText etUserId, etPassword;
+    private EditText etUsername, etPassword;
     private Button btnRegister;
     private DatabaseHelper dbHelper;
 
@@ -36,26 +35,26 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        etUserId = findViewById(R.id.etRegisterId);
+        etUsername = findViewById(R.id.etRegisterUsername);
         etPassword = findViewById(R.id.etRegisterPassword);
         btnRegister = findViewById(R.id.btnRegister);
     }
 
     private void performRegister() {
-        String name = etUserId.getText().toString();
+        String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        if (name.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(RegisterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
 
         // TODO: Create the user in db.
         try {
-            boolean adminCreated = dbHelper.createAdminAccount(name, password);
+            boolean adminCreated = dbHelper.createAdminAccount(username, password);
             if (adminCreated) {
                 Toast.makeText(RegisterActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RegisterActivity.this, AdminActivity.class);
-                intent.putExtra("ADMIN_NAME", name);
+                intent.putExtra("ADMIN_NAME", username);
                 startActivity(intent);
                 finish();
             }

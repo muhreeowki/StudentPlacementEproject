@@ -25,7 +25,7 @@ public class TPOAddSelectedStudentActivity extends AppCompatActivity {
             setContentView(R.layout.activity_tpo_add_selected_student);
 
             dbHelper = new DatabaseHelper(this);
-            etStudentId = findViewById(R.id.etStudentId);
+            etStudentId = findViewById(R.id.etStudentUsername);
             etStudentName = findViewById(R.id.etStudentName);
             etCompanyName = findViewById(R.id.etCompanyName);
             etPackage = findViewById(R.id.etPackage);

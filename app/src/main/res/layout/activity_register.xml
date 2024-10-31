@@ -11,21 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        android:text="Create a New Admin Account"
+        android:text="Create New Admin Account"
+        android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/etRegisterId"
+        android:id="@+id/etRegisterUsername"
         android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="User Id" />
+        android:hint="Username" />
 
     <EditText
         android:id="@+id/etRegisterPassword"
-        android:layout_width="380dp"
-        android:layout_height="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -33,7 +34,7 @@
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Register" />
 

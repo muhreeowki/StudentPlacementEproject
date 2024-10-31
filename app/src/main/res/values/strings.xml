@@ -42,4 +42,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="login_into_student_account">Login into Student Account</string>
+    <string name="login_into_tpo_account">Login into TPO Account</string>
+    <string name="login_into_admin_account">Login into Admin Account</string>
 </resources>

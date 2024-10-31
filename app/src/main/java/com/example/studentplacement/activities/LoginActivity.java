@@ -6,13 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.studentplacement.DatabaseHelper;
 import com.example.studentplacement.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText etUserNameOrId, etPassword;
+    private EditText etUsername, etPassword;
+    private TextView tvLogin;
     private RadioGroup rgUserType;
     private Button btnLogin;
     private DatabaseHelper dbHelper;
@@ -24,10 +26,24 @@ public class LoginActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        etUserNameOrId = findViewById(R.id.etLoginId);
+        etUsername = findViewById(R.id.etLoginUsername);
         etPassword = findViewById(R.id.etLoginPassword);
         rgUserType = findViewById(R.id.rgUserType);
         btnLogin = findViewById(R.id.btnLogin);
+        tvLogin = findViewById(R.id.loginTextVeiw);
+
+        rgUserType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbAdmin) {
+                    tvLogin.setText(R.string.login_into_admin_account);
+                } else if (checkedId == R.id.rbTPO) {
+                    tvLogin.setText(R.string.login_into_tpo_account);
+                } else if (checkedId == R.id.rbStudent) {
+                    tvLogin.setText(R.string.login_into_student_account);
+                }
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,10 +54,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performLogin() {
-        String id = etUserNameOrId.getText().toString();
+        String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        if (id.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -49,10 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         int selectedId = rgUserType.getCheckedRadioButtonId();
         if (selectedId == R.id.rbAdmin) {
             // Hardcoded admin credentials for demo
-            if (dbHelper.validateLogin(id, password, DatabaseHelper.TABLE_ADMIN)) {
-                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            if (dbHelper.validateLogin(username, password, DatabaseHelper.TABLE_ADMIN)) {
                 Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                intent.putExtra("ADMIN_NAME", id);
+                intent.putExtra("ADMIN_NAME", username);
+                Toast.makeText(LoginActivity.this, "Welcome Back", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
             } else {
@@ -60,9 +76,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else if (selectedId == R.id.rbTPO) {
             // Verify TPO credentials from database
-            if (dbHelper.validateLogin(id, password, DatabaseHelper.TABLE_TPO)) {
+            if (dbHelper.validateLogin(username, password, DatabaseHelper.TABLE_TPO)) {
                 Intent intent = new Intent(LoginActivity.this, TPOActivity.class);
-                intent.putExtra("TPO_NAME", id);
+                intent.putExtra("TPO_NAME", username);
+                Toast.makeText(LoginActivity.this, "Welcome Back", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
             } else {
@@ -70,9 +87,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else {
             // Verify Student credentials from database
-            if (dbHelper.validateLogin(id, password, DatabaseHelper.TABLE_STUDENT)) {
+            if (dbHelper.validateLogin(username, password, DatabaseHelper.TABLE_STUDENT)) {
                 Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
-                intent.putExtra("STUDENT_NAME", id);
+                intent.putExtra("STUDENT_NAME", username);
+                Toast.makeText(LoginActivity.this, "Welcome Back", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
             } else {

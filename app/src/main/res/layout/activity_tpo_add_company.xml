@@ -26,27 +26,20 @@
             android:layout_marginBottom="16dp"/>
 
         <EditText
-            android:id="@+id/etJobDescription"
+            android:id="@+id/etDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Job Description"
+            android:layout_marginBottom="16dp"
+            android:hint="Description"
             android:inputType="textMultiLine"
-            android:minLines="3"
-            android:layout_marginBottom="16dp"/>
+            android:minLines="3" />
 
         <EditText
-            android:id="@+id/etEligibilityCriteria"
+            android:id="@+id/etRequirements"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Eligibility Criteria"
-            android:layout_marginBottom="16dp"/>
-
-        <EditText
-            android:id="@+id/etPackage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Package Details"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"
+            android:hint="Requirements" />
 
         <Button
             android:id="@+id/btnSubmit"

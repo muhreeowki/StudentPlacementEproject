@@ -29,8 +29,8 @@ public class TPOAddCompanyActivity extends AppCompatActivity {
 
     private void initializeViews() {
         etCompanyName = findViewById(R.id.etCompanyName);
-        etJobDescription = findViewById(R.id.etJobDescription);
-        etEligibilityCriteria = findViewById(R.id.etEligibilityCriteria);
+        etJobDescription = findViewById(R.id.etDescription);
+        etEligibilityCriteria = findViewById(R.id.etRequirements);
         btnSubmit = findViewById(R.id.btnSubmit);
     }
 
